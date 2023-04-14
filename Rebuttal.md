@@ -1,8 +1,10 @@
+We thank all the reviewers for their time, efforts and constructive comments and suggestions. These comments are very helpful to further improve our paper. We have provided our point-to-point response to the comments of each reviewer below and we sincerely invite the reviewers for further discussion.
+
 # Table of Contents
 
 - [Table of Contents](#table-of-contents)
 - [Reviewer p7r1](#reviewer-p7r1)
-    - [Weakness #1: Clarification](#weakness-1-clarification)
+    - [Weakness #1: Relationship with existing works](#weakness-1-relationship-with-existing-works)
     - [Question #1: Problem Definition](#question-1-problem-definition)
     - [Question #2: On topology manipulations and aggregators](#question-2-on-topology-manipulations-and-aggregators)
 - [Reviewer aakq](#reviewer-aakq)
@@ -26,39 +28,41 @@
     - [Quesiton #2: Micro-averaged metrics](#quesiton-2-micro-averaged-metrics)
 
 
+
 # Reviewer p7r1
 
 We appreciate for your thoughtful review as well as the time and effort you have taken to evaluate our work. We have carefully considered your comments and criticisms, please see our itermized responses to each of your concerns:
 
-### Weakness #1: Clarification
+### Weakness #1: Relationship with existing works
 
-Thank you for your valuable comment. We apologize for any confusion that may have arisen and assure you that we will carefully revise this section. We would like to stress that all the techniques mentioned in our work have demonstrated significant success in addressing the heterophilic link/long-distance propagation problem in graph learning. However, while this issue has a considerable impact on the performance and bias of class-imbalanced graph learning models, we are unaware of any work that explicitly explores the relationship and interplay between the widely-discussed heterophilic link/long-distance propagation challenges and the class imbalance problem.
+Thank you for your valuable comment. All the techniques (i.e., GNNs for graphs with high heterophily or long-distance propagation) have demonstrated significant success. However, while these widely-discussed heterophilic/long-distance propagation challenges have a considerable impact on the performance and bias of class-imbalanced graph learning models, we are unaware of any work that explicitly explores the relationship and interplays between them and the class imbalance problem.
+
+Furthermore, our setting bears key differences from heterophilic GNNs. While the ambivalent message-passing is conceptually similar to heterophilic links, we do not make the general assumption that the input graph is heterophilic (i.e., heterophilic edges prevail). We focus more on the influence of "local heterophily" and its interplay with class imbalance, as well as how to mitigate such issues with topological augmentation. More detailed explanations can be found in the Related Works section (GNNs with heterophilic/long-distance propagation) and relevant results are presented in Appendix 2.4.
 
 ### Question #1: Problem Definition
 
-We apologize for the confusion, we will provide further clarification regarding the problem setting in the abstract to prevent any potential ambiguities.
+Thank you for the great suggestion. We will provide further clarification regarding the problem setting in the abstract to prevent any potential ambiguities.
 
 ### Question #2: On topology manipulations and aggregators
 
 Thank you for your insightful suggestion. We find this a very interesting direction to be explored. 
 
-- **Observation & discussion:** Regarding our work, we considered three GNN architectures (GCN, GAT, and GraphSAGE) with varying aggregation functions (e.g., mean, max, attention-based) and evaluated their performance on several IGL tasks. Our experiments revealed that compared to the performance gain from imbalance handling techniques (e.g., GraphSMOTE, GraphENS, GBA), the difference in performance between different GNNs/aggregators was relatively small. There is no single GNN/aggregator proved universally superior for IGL tasks. Nevertheless, GBA consistently improved the performance of various GNNs regardless of the message aggregator used, which is expected given its model-agnostic nature.
+- **Observation & discussion:** Regarding our work, we considered three GNN architectures (GCN, GAT, and GraphSAGE) with varying aggregation functions (e.g., mean, max, attention-based) and evaluated their performance on several IGL tasks. Our experiments revealed that compared to the performance gain from imbalance handling techniques (e.g., GraphSMOTE, GraphENS, GBA), the difference in performance between different GNNs/aggregators was relatively small. There is no single GNN/aggregator proved universally superior for IGL tasks. Nevertheless, GBA consistently improved the performance of various GNNs regardless of the message aggregator used, which is a key advantage of our method.
 - **Future directions:** Looking to the future, we believe that exploring the joint influence of message aggregators and topology manipulation in IGL holds significant promise. This could lead to the development of (1) more intelligent graph augmentation methods that can adapt to different aggregators, or even (2) class-imbalance-aware aggregators that can directly mitigate the class-imbalance bias in message-passing. We consider this to be an important direction for our future work.
 
 Thank you once again for your feedback, and please let us know if you have any further questions or concerns.
 
-
 # Reviewer aakq
 
-We appreciate for your thoughtful review as well as the time and effort you have taken to evaluate our work. We have carefully considered your comments and criticisms, please see our itermized responses to each of your concerns:
+We appreciate for your thoughtful review as well as the time and effort you have taken to evaluate our work. We have carefully considered your comments and criticisms, please see our itemized responses to each of your concerns:
 
 ### Weakness #1: How does our methodology alleviates class imbalance
 
-We apologize for any confusion that may have arisen and would like to provide a brief clarification.
+We would like to provide the following clarification.
 
-**Problem Definition:**
+**Problem Definition:** 
 
-The problem addressed in our work is the *class imbalance* problem in transductive node classification. *Topology imbalance*, which is defined as "asymmetric topological properties of the labeled nodes, i.e., labeled nodes are not equal in terms of their structural role in the graph," is another problem proposed in the ReNode paper [1]. While we include ReNode as one of our baseline methods, we would like to emphasize that topology imbalance is orthogonal to class imbalance and is not the focus of our work.
+We are afraid this is a factual misunderstanding. The problem addressed in our work is the *class imbalance* problem in transductive node classification. *Topology imbalance*, which is defined as "asymmetric topological properties of the labeled nodes, i.e., labeled nodes are not equal in terms of their structural role in the graph," is another problem proposed in the ReNode paper [1]. While we include ReNode as one of our baseline methods, we would like to emphasize that topology imbalance is different from class imbalance and is not the focus of our work.
 
 **How does GBA alleviate class imbalance problem:**
 
@@ -66,12 +70,18 @@ The problem addressed in our work is the *class imbalance* problem in transducti
 - To address this issue, GBA identifies nodes with high prediction risks, which are likely to be misclassified minority class nodes due to their greater susceptibility to ambivalent and distant message-passing (as shown in Figure 1). 
 - We then utilize similarity-based candidate class selection and topological augmentation to rectify misclassifications caused by the joint effect of ambivalent/distant message-passing and class imbalance.
 
-Our approach is effective in alleviating class imbalance because the disadvantaged minority classes stand to benefit the most from our proposed GBA approach. We provide empirical evidence of this in Figure 6 and Appendix 2.1, where GBA demonstrates a significant improvement in minority class accuracy under ambivalent and distant message-passing. Additionally, Table 6 and Appendix 2.2 show that our approach can also greatly reduce the disparity in class accuracy, i.e., promoting fairness among majority and minority classes. We appreciate your feedback and will make revisions to improve the clarity of our paper.
-
+Our approach is effective in alleviating class imbalance primarily because the disadvantaged minority classes tend to benefit the most from our proposed GBA approach. We provide empirical evidence of this in Figure 6 and Appendix 2.1, where GBA demonstrates a significant improvement in minority class accuracy under ambivalent and distant message-passing. Additionally, Table 6 and Appendix 2.2 show that our approach can also greatly reduce the disparity in class accuracy, i.e., promoting fairness among majority and minority classes. We appreciate your feedback and will make revisions to improve the clarity of our paper.
 
 ### Weakness #2 & Question #2: Related Works
 
-Thank you for the valuable suggestion. We will incorporate additional discussions in the related work section as per your recommendation. We acknowledge the contributions of DEMO-Net and Tail-GNN in addressing degree-related biases. However, it is worth noting that these works aim to mitigate the bias between high-degree (head) nodes and low-degree (tail) nodes rather than handling the bias between head/tail classes. Hence, it may not be appropriate to regard them as direct counterparts to the IGL techniques employed in this study.
+Thank you for the valuable suggestion. We will incorporate additional discussions in the related work section as per your recommendation. We acknowledge the contributions of DEMO-Net and Tail-GNN in addressing degree-related biases. However, it is worth noting that these works aim to mitigate the bias between high-degree (head) nodes and low-degree (tail) nodes rather than handling the bias between head/tail classes. Hence, it may not be appropriate to regard them as direct counterparts to the IGL techniques employed in this study. Nevertheless, we tested Tail-GNN on our task based on the setting of the main result (Table 2, IR=10). Results show that GNNs that are designed for degree-imbalance does not alleviate class imbalance, and GBA can boost its performance by a large margin.
+
+| GNN - Metric         | Cora  | w/ GBA_P        | w/ GBA_T          | CiteSeer | w/ GBA_P        | w/ GBA_T          | PubMed | w/ GBA_P          | w/ GBA_T        |
+| -------------------- | ----- | --------------- | ----------------- | -------- | --------------- | ----------------- | ------ | ----------------- | --------------- |
+| **TailGCN BAcc**     | 53.90 | *65.33*(21.21%) | **68.34**(26.79%) | 35.45    | *47.66*(34.44%) | **50.88**(43.51%) | 63.45  | **72.38**(14.08%) | *70.86*(11.68%) |
+| **TailGCN Macro-F1** | 48.90 | *64.43*(31.74%) | **68.05**(39.14%) | 23.37    | *43.36*(85.55%) | **45.84**(96.15%) | 52.13  | **67.82**(30.08%) | *65.89*(26.37%) |
+| **TailGCN Micro-F1** | 61.98 | *70.52*(13.78%) | **72.98**(17.75%) | 32.12    | *45.64*(42.09%) | **48.82**(51.99%) | 57.84  | **69.44**(20.06%) | *67.80*(17.22%) |
+
 
 ### Weakness #3: Format
 
@@ -84,9 +94,9 @@ Our work is novel in the following aspects:
 - Our investigation reveals that ambivalent and distant message-passing can greatly amplify the bias resulting from class imbalance. While extensive research has been conducted on both of these challenges separately, no prior work has explicitly examined their relationship and interaction with the class imbalance issue.
 - Based on our findings, we have developed a lightweight, efficient, and versatile augmentation technique called GBA to mitigate ambivalent and distant message-passing in IGL. This technique is compatible with existing imbalanced graph learning techniques and can be used to further enhance their performance. To our best knowledge, it is the first work to handle node-level class imbalance via topology-centric operations.
 
-Extensive experiments validate the effectiveness of GBA in addressing class imbalance, resulting in consistent and significant gains in various real-world IGL tasks in terms of classificaiton performance (Table 2 & 3 & 7 & 8 & 9 & 10) and reducing class accuracy disparity (Table 6 & 8).
+Extensive experiments validate the effectiveness of GBA in addressing class imbalance, resulting in consistent and significant gains in various real-world IGL tasks in terms of classificaiton performance (Tables 2 & 3 & 7 & 8 & 9 & 10) and reducing class accuracy disparity (Tables 6 & 8).
 
-Thank you once again for your feedback, and please let us know if you have any further questions or concerns.
+Thank you once again for your feedback. We hope we have addressed our concerns, and we welcome any follow-up question or discussion.
 
 
 # Reviewer ZyGi
@@ -95,40 +105,42 @@ We appreciate for your thoughtful review as well as the time and effort you have
 
 ### Weakness #1: GraphSMOTE & GraphENS results in Figure 1
 
-Thank you for your valuable suggestion. There is no doubt that other IGL baselines such as GraphSMOTE and GraphENS can alleviate the long-tail problem since they can oversample the labeled nodes of minority classes and make them more robust to the challenges in message-passing. We have run the GraphSMOTE and GraphENS under the same setting as in Figure 1: [Fig-GraphENS-Ambivalent](https://anonymous.4open.science/r/KDD23_Paper275-E66D/pics/mp_ambivalent_gens.png), [Fig-GraphENS-Distant](https://anonymous.4open.science/r/KDD23_Paper275-E66D/pics/mp_distant_gens.png), [Fig-GraphSMOTE-Ambivalent](https://anonymous.4open.science/r/KDD23_Paper275-E66D/pics/mp_ambivalent_gsmote.png), [Fig-GraphSMOTE-Distant](https://anonymous.4open.science/r/KDD23_Paper275-E66D/pics/mp_distant_gsmote.png).
+Thank you for your valuable suggestion. The reviewer is right in that other IGL baselines such as GraphSMOTE and GraphENS can alleviate the long-tail problem since they can oversample the labeled nodes of minority classes and make them more robust to the challenges in message-passing. Following reviewer's suggestion, we have run the GraphSMOTE and GraphENS under the same setting as in Figure 1: [Fig-GraphENS-Ambivalent](https://anonymous.4open.science/r/KDD23_Paper275-E66D/pics/mp_ambivalent_gens.png), [Fig-GraphENS-Distant](https://anonymous.4open.science/r/KDD23_Paper275-E66D/pics/mp_distant_gens.png), [Fig-GraphSMOTE-Ambivalent](https://anonymous.4open.science/r/KDD23_Paper275-E66D/pics/mp_ambivalent_gsmote.png), [Fig-GraphSMOTE-Distant](https://anonymous.4open.science/r/KDD23_Paper275-E66D/pics/mp_distant_gsmote.png).
 
-Compared with the naive GCN without any IGL techniques, the gap between the minority class and majority class curves shrinks but still exists, and the gap is still non-neglectable. We also notice that compared to GraphSMOTE, GraphENS usually yields a smaller gap. This observation is in line with our findings that GraphENS has a lower accuracy disparity across different classes than other baselines. However, the gap can be further reduced using GBA, as detailed in Appendix A2.2 and Table 6.
+Compared with the naive GCN without any IGL techniques, the gap between the minority class and majority class curves shrinks but still exists, and the gap is still non-neglectable. We also notice that compared to GraphSMOTE, GraphENS usually yields a smaller gap. This observation is in line with our findings that GraphENS has a smaller accuracy disparity across different classes than other baselines. On top of that, the gap can be further reduced using the proposed GBA, as detailed in Appendix A2.2 and Table 6.
 
 
 
 ### Weakness #2: Effectiveness of ambivalent and distant message-passing
 
-We are sorry for any confusion that may have arisen. We wish to clarify that **we neither consider nor claim that ambivalent and distant message-passing constitute our technical contribution**. Rather, they represent the challenges that inherently exist in graph learning tasks and have been extensively discussed in previous works aimed at addressing heterophilic graphs and long-distance propagation.
+We wish to clarify that **we neither consider nor claim that ambivalent and distant message-passing constitute our technical contribution**. 
+Our key contributions are:
 
-Our contributions are:
 - We propose to address the issue of Imbalanced Graph Learning (IGL) through a topology-centric lens. To tackle the node-level class imbalance via topological manipulations, we explore the role of topology structure in the context of IGL, which has received limited attention in prior literature.
-- Our investigation reveals that ambivalent and distant message-passing can greatly amplify the bias resulting from class imbalance. While extensive research has been conducted on both of these challenges separately, no prior work has explicitly examined their relationship and interaction with the class imbalance issue.
+- Our investigation reveals that ambivalent and distant message-passing can greatly amplify the bias resulting from class imbalance. While prior research has been conducted on both of these challenges separately, no prior work has explicitly examined their relationship and interaction with the class imbalance issue.
 - Based on our findings, we have developed a lightweight, efficient, and versatile augmentation technique called GBA to mitigate ambivalent and distant message-passing in IGL. This technique is compatible with existing imbalanced graph learning techniques and can be used to further enhance their performance. 
-- Extensive experiments validate the effectiveness of GBA in addressing class imbalance, resulting in consistent and significant gains in various real-world IGL tasks in terms of classificaiton performance (Table 2 & 3 & 7 & 8 & 9 & 10) and reducing class accuracy disparity (Table 6 & 8).
+- Extensive experiments validate the effectiveness of GBA in addressing class imbalance, resulting in consistent and significant gains in various real-world IGL tasks in terms of classificaiton performance (Tables 2 & 3 & 7 & 8 & 9 & 10) and reducing class accuracy disparity (Tables 6 & 8).
 
-In Appendix 2.1 and Fig. 6, we provide a detailed discussion of the effectiveness of GBA in mitigating the influence of ambivalent and distant message-passing. Our results demonstrate that GBA can effectively alleviate the negative impact of these challenges in IGL, thereby enabling GNN models to achieve better prediction performance on minority classes.
+In Appendix 2.1 and Fig. 6, we provide a detailed discussion of the effectiveness of GBA in mitigating the influence of ambivalent and distant message-passing. Our results demonstrate that GBA can effectively alleviate the negative impact of these challenges in IGL, thereby enabling GNN models to achieve much better prediction performance on minority classes.
 
 ### Weakness #3: Relationship with TAM
 
-Thank you for bringing this to our attention. In TAM, the authors demonstrate that "a significantly high false positive ratio appears around minor nodes that have higher connectivity with major nodes". While this is conceptually similar to the challenge of ambivalent message-passing, there are several key differences between TAM and our work:
+Thank you for bringing this to our attention. In TAM, the authors demonstrate that ``a significantly high false positive ratio appears around minor nodes that have higher connectivity with major nodes". While this is conceptually similar to the challenge of ambivalent message-passing, there are several key differences between TAM and our work:
+
 - **Problem Scope**: TAM does not consider the influence of distant message-passing in IGL, which is non-negligible in practice, as demonstrated in Fig. 1(b). In contrast, our work examines the joint effect of both ambivalent and distant message-passing. This difference in scope also results in varying empirical performance, as further discussed in the following response.
 - **Technical Solution**: TAM proposes to down-weight nodes/classes with anomalous connectivity patterns in the loss function, mainly focusing on reweighting labeled nodes (except the class-wise temperature strategy). In comparison, our approach is a general data augmentation strategy that considers both labeled and unlabeled nodes, aimed at mitigating both ambivalent and distant message-passing in IGL.
 - **Performance**: Lastly, there are notable differences in the empirical performance of TAM and our work. As evidenced by Table 2 in our paper and Table 1 in TAM, X+GBA consistently outperforms X+TAM across all settings with a notable margin. For instance, with GCN and BAcc, the best results from GBA/TAM are 74.24/71.52 (Cora), 66.35/57.47 (CiteSeer), and 77.38/74.13 (PubMed). We have checked the random seed and other settings that may cause inconsistent evaluation and confirmed that the above results are comparable.
 
 ### Weakness #4: Ambivalent message-passing and homophily assumption
 
-We apologize for the confusion. We would like to make a brief reclarification here.
-- **Regarding the issue of ambivalent message-passing and graph heterophily:** We respectfully direct your attention to our answer to question 2, as well as the Related Works section (GNNs with heterophilic/long-distance propagation) and relevant results presented in Appendix 2.4.
-- **Regarding the graph heterophily and homophily assumption:** We would like to note that as discussed in Section A.3, graph with high heterophily (i.e., heterophilic edges prevail) is beyond the scope of this work. Our approach GBA aims to address class imbalance bias caused by local heterophilic connections in graphs exhibiting low heterophily, i.e., we follow the homophily assumption in this work. Therefore, high-risk misclassified nodes that suffer local ambivalent message-passing are likely to be linked to their ground truth class, enabling GBA to execute candidate class selection. Please also refer to Figure 2 (Section 3.2 part) that illustrates this concept with an intuitive example.
+We would like to make the following clarification.
+
+- **Regarding the issue of ambivalent message-passing and graph heterophily:** While the ambivalent message-passing is conceptually similar to heterophilic links, we do not make the general assumption that the input graph is heterophilic (i.e., heterophilic edges prevail). We focus more on the influence of ``local heterophilly" and its interplay with class imbalance, as well as how to mitigate such issue with topological augmentation. More detailed explanations can be found in the Related Works section (GNNs with heterophilic/long-distance propagation) and relevant results presented in Appendix 2.4.
+- **Regarding the graph heterophily and homophily assumption:** As discussed in Section A.3, graph with high heterophily is beyond the scope of this work. Our approach GBA aims to address class imbalance bias caused by local heterophilic connections in graphs exhibiting low heterophily, i.e., we follow the homophily assumption in this work, thus our proposed GBA still works well with GNNs designed for graphs with homogeneity. Please also refer to Figure 2 (Section 3.2) that illustrates this concept with an intuitive example.
 
 ### Weakness #5: Unsteady results?
 
- Sorry for the confusion and we wish to clarify that the imbalanced semi-supervised learning setting we adopted in our study has been widely used in prior literature [1, 2, 3]. Therefore, we deemed it appropriate to adhere to their settings and evaluation procedures to ensure a fair comparison.
+We wish to clarify that the imbalanced semi-supervised learning setting we adopted in our study has been widely used in prior literature [1, 2, 3]. Therefore, we deemed it appropriate to adhere to the same settings and evaluation procedures to ensure a fair comparison.
 
 Furthermore, we emphasize that to mitigate the impact of randomness and produce reliable results, we performed five independent runs for all experiments. Each run consisted of the entire data filtering, model initialization, and training phases. Notably, we randomly selected the labeled nodes of minority classes in each run to ensure that any enhancements attributed to the GBA were not due to a selective choice of node combinations or chance events.
 
@@ -147,8 +159,7 @@ Returning to graph learning, the ambivalent and distant message-passing present 
 
 Considering these factors, for a minority test node from class A but predicted to be class B, the uncertainty-based risk estimation will likely fail only if it is indistinguishable from class B in both (1) node feature space and (2) connectivity pattern. Such a scenario is particularly problematic since all training signals available for the test node are misleading, and most existing learning models would fail in this situation.
 
-Fortunately, such extreme cases are uncommon in practice, and we validate this by conducting experiments under more extreme class imbalance with IR = 100. Results show that GBA can further boost the BEST performance among all IGL techniques by a large margin even under extreme class imbalance. For example, for best BAcc with GCN, GBA\_P achieved 14.10\%/20.04\%/42.52\% improvement on Cora/CiteSeer/PubMed, respectively. For best Marco-F1, this improvement is 21.35\%/23.81\%/73.41\%. Due to space limitation, we only report the BEST results among 7 baselines under each GBA setting, please refer to the [anonymous page](https://anonymous.4open.science/r/KDD23_Paper275-E66D) for the full results.
-
+Fortunately, such extreme cases are uncommon in practice, and we validate this by conducting experiments under more extreme class imbalance with IR = 100. Results show that GBA can further boost the BEST performance among all IGL techniques by a large margin even under extreme class imbalance. For example, for best BAcc with GCN, GBA-P achieved 14.10%/20.04%/42.52% improvement on Cora/CiteSeer/PubMed, respectively. For best Marco-F1, this improvement is 21.35%/23.81%/73.41%. Due to space limitation, we only report the BEST results among 7 baselines under each GBA setting, please refer to the [anonymous page](https://anonymous.4open.science/r/KDD23_Paper275-E66D) (section: Under Extreme Class Imbalance (IR=100)) for the full results.
 
 | GNN - Metric           | Cora  | w/ GBA_P        | w/ GBA_T          | CiteSeer | w/ GBA_P          | w/ GBA_T          | PubMed | w/ GBA_P          | w/ GBA_T        |
 | ---------------------- | ----- | --------------- | ----------------- | -------- | ----------------- | ----------------- | ------ | ----------------- | --------------- |
@@ -159,8 +170,6 @@ Fortunately, such extreme cases are uncommon in practice, and we validate this b
 | **SAGE BEST BAcc**     | 67.65 | *79.77*(17.91%) | **80.36**(18.78%) | 57.64    | *69.22*(20.09%)   | **73.42**(27.37%) | 40.73  | **62.32**(52.99%) | *53.48*(31.29%) |
 | **SAGE BEST Macro-F1** | 64.37 | *78.93*(22.62%) | **79.82**(24.00%) | 53.64    | *66.57*(24.11%)   | **69.72**(29.98%) | 32.38  | **60.98**(88.33%) | *52.20*(61.21%) |
 
-
-
 [1] [Dealing with Data Difficulty Factors while Learning from Imbalanced Data](https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=a4c275fefe646a0a578713cd14070affc0594286)  
 [2] [Effect of label noise in the complexity of classification problems](https://www.sciencedirect.com/science/article/pii/S0925231215001241)  
 [3] [Overlap versus imbalance](https://web.cs.dal.ca/~tt/papers/AI2010a.pdf)  
@@ -169,10 +178,10 @@ Fortunately, such extreme cases are uncommon in practice, and we validate this b
 
 ### Weakness #7: Natural class imbalance
 
+Thanks for your suggestion. OGB has set a great large-scale benchmark for graph learning research. As stated in the paper, on each dataset we have to consider combinations of 7 baselines and 3 GBA settings (w/o GBA, + GBA-P, + GBA-T), and each combination needs to be run 5 times independently to get credible results. Also, some IGL baselines have high space complexity, e.g. the official implementation of ReNode, GraphSMOTE and GraphENS require space for a dense adjacency matrix of $O(n^2)$ size. Since GBA runs on top of these baselines, %Due to the limitation of computational resources, 
+we are currently unable to run experiments on graphs of this scale.
 
-Thanks for your advice. OGB has set a great large-scale benchmark for graph learning research. However as stated in the paper, on each dataset we have to consider combinations of 7 baselines and 3 GBA settings (w/o GBA, + GBA\_P, + GBA\_T), and each combination needs to be run 5 times independently to get credible results. Also, some IGL baselines have high space complexity, e.g. the official implementation of ReNode, GraphSMOTE and GraphENS require space for a dense adjacency matrix of $O(n^2)$ size. Due to the limitation of computational resources, we are currently unable to run experiments on graphs of this scale.
-
-Despite these constraints, we were able to simulate the long-tail class imbalance present in real-world data by utilizing a power-law distribution. We set the imbalance ratio (largest class to smallest class) to 100 to test GBA's robustness under natural and extreme class imbalance. Our results demonstrated that GBA consistently improved the performance of all IGL techniques by a significant margin. For instance, the BAcc of GCN with GBA\_T achieved an improvement of 4.14\%/8.97\%/4.16\% on Cora/CiteSeer/PubMed, respectively, while the Marco-F1 also showed improvements of 3.67\%/10.37\%/3.09\%. Such improvement is consistent with other GNN architectures and metrics. Similar to the above, due to the space limitation, we only report the BEST results among 7 baselines under each GBA setting, please kindly refer to the [anonymous page](https://anonymous.4open.science/r/KDD23_Paper275-E66D) for full results.
+Despite these constraints, we were able to simulate the long-tail class imbalance present in real-world data by utilizing a power-law distribution. We set the imbalance ratio (largest class to smallest class) to 100 to test GBA's robustness under natural and extreme class imbalance. Our results demonstrated that GBA consistently improved the performance of all IGL techniques by a significant margin. For instance, the BAcc of GCN with GBA-T achieved an improvement of 4.14%/8.97%/4.16% on Cora/CiteSeer/PubMed, respectively, while the Marco-F1 also showed improvements of 3.67%/10.37%/3.09%. Such improvement is consistent with other GNN architectures and metrics. Similar to the above, due to the space limitation, we only report the BEST results among 7 baselines under each GBA setting, please kindly refer to the [anonymous page](https://anonymous.4open.science/r/KDD23_Paper275-E66D) for full results (section: Under Natural (Long-tailed) Class Imbalance (IR=100)).
 
 
 | GNN - Metric           | Cora  | w/ GBA_P       | w/ GBA_T         | CiteSeer | w/ GBA_P        | w/ GBA_T          | PubMed | w/ GBA_P         | w/ GBA_T         |
@@ -192,10 +201,11 @@ Thank you once again for your feedback, and please let us know if you have any f
 
 ### Weakness #1: On the high-risk but correct prediction
 
-Thank you for your insightful question. Given that  the model prediction, labeled nodes, and graph topology are the only available signals, it is hard to determine whether a high-risk node is misclassified or not. However, this does not pose a significant hindrance to GBA for the following reasons:
+Thank you for your insightful question. Given that the model prediction, labeled nodes, and graph topology are the only available signals, it is hard to determine whether a high-risk node is misclassified or not. However, this does not pose a significant hindrance to GBA for the following reasons:
+
 - Firstly, for minority classes, a high-uncertainty but correctly classified node will still have a small risk score due to the relative normalization approach employed in Eq. (7), which is designed to be imbalance-aware and protect minority classes. Therefore, such nodes are unlikely to be wrongly disturbed by the augmentation.
 - Secondly, it is unlikely that nodes belonging to the majority classes will exhibit high-uncertainty as these classes have sufficient training labels. Among the high-risk nodes, the population of misclassified nodes is significantly larger than that of correctly classified nodes (as illustrated in Fig. 3 \& 4), thus the benefits of applying GBA clearly outweigh the losses.
-- Lastly, GBA is resilient to "fake" high-uncertainty nodes produced by randomness in training dynamics, as it employs soft and dynamic augmentation during training. GBA does not generate virtual edges for all high-uncertainty/risk nodes in every iteration (as indicated in line \#11 in Algorithm 1), thereby is not sensitive to the temporary high-uncertainty pattern resulting from random training dynamics.
+- Lastly, GBA is resilient to ``fake" high-uncertainty nodes produced by randomness in training dynamics, as it employs soft and dynamic augmentation during training. GBA does not generate virtual edges for all high-uncertainty/risk nodes in every iteration (as indicated in line \#11 in Algorithm 1), thereby is not sensitive to the temporary high-uncertainty pattern resulting from random training dynamics.
 
 ### Weakness #2: Early stage of training
 
@@ -204,16 +214,15 @@ Thank you for raising an important question. In Appendix 3 (Limitations and Futu
 - Fast approximate convergence. Our experiments on five distinct datasets and three GNN architectures have demonstrated that the GNN's predictive performance significantly improves in the early stage of training, reaching close to their maximum/best results within 10-50 epochs.  As a result, the imperfect predictions that occur only in the initial few epochs have limited impact.
 - Soft augmentation. As discussed in our response to Question 1, GBA does not generate virtual edges for all high-uncertainty/risk nodes during each iteration. Additionally, unlike node-centric resampling techniques (e.g., GraphENS with a default `warmup_epoch=5`), GBA only introduces a small number of virtual super-nodes and edges, which is less likely to interfere with the training process within the initial few epochs.
 
-Futhermore, we note that this issue can be easily prevented by introducing a "warmup" parameter, which we will implement and release along with our source code and documentation after the paper's acceptance.
-
+Furthermore, we note that this issue can be easily prevented by introducing a `warmup` parameter, which we will implement and release along with our source code and documentation after the paper's acceptance.
 
 ### Weakness #3: Mild class imbalance
 
-Thanks for the suggestion. We would like to note that the imbalanced semi-supervised learning setting we adopted has been widely used in previous research [1, 2, 3]. Therefore, we decided to employ their setup and evaluation protocols to ensure a just comparison.
+Thanks for the suggestion. We would like to note that the imbalanced semi-supervised learning setting we adopted has been widely used in previous research [1, 2, 3]. Therefore, we decided to employ their setup and evaluation protocols to ensure a fair comparison.
 
 Nevertheless, in order to test GBA's effectiveness with less label sparsity, we carry out experiments under mild class imbalance (IR = 5) following the previous works (e.g., ReNode, GraphENS, TAM), where all the minority class have 4 training samples. We note that this is also the smallest IR used in existing works. Under the mild class imbalance, GBA still consistently improves the performance of all IGL techniques by a considerable margin.
-For example, in terms of best BAcc with GCN, GBA\_T achieves 3.54\%/1.70\%/2.77\% improvement on Cora/CiteSeer/PubMed, respectively.
-It is also worth noting that GraphSAGE achieved the best performance among all 3 GNN architectures. With GraphSAGE, GBA\_T achieves larger improvements, i.e., 5.53\%/9.84\%/5.44\% best BAcc improvement and 4.01\%/10.18\%/7.11\% best macro-f1 on Cora/CiteSeer/PubMed, respectively. Due to space limitation, we only report the BEST results among 7 baselines under each GBA setting, please kindly refer to the following [anonymous page](https://anonymous.4open.science/r/KDD23_Paper275-E66D) for the full results.
+For example, in terms of best BAcc with GCN, GBA-T achieves 3.54%/1.70%/2.77% improvement on Cora/CiteSeer/PubMed, respectively.
+It is also worth noting that GraphSAGE achieved the best performance among all 3 GNN architectures. With GraphSAGE, GBA_T achieves larger improvements, i.e., 5.53%/9.84%/5.44% best BAcc improvement and 4.01%/10.18%/7.11% best macro-f1 on Cora/CiteSeer/PubMed, respectively. Due to space limitation, we only report the BEST results among 7 baselines under each GBA setting, please kindly refer to the following [anonymous page](https://anonymous.4open.science/r/KDD23_Paper275-E66D) for the full results (section: With Less Sparse Minority Samples (IR = 5)).
 
 
 | GNN - Metric           | Cora    | w/ GBA_P       | w/ GBA_T         | CiteSeer | w/ GBA_P         | w/ GBA_T          | PubMed | w/ GBA_P       | w/ GBA_T         |
@@ -233,16 +242,15 @@ It is also worth noting that GraphSAGE achieved the best performance among all 3
 
 ### Quesiton #1: Using variance in Eq. (7)
 
-Thank you for your question. The similarity in the form of Eq. (7) and standard normalization is why we named it imbalance-aware normalization. To incorporate the class-imbalance prior directly into the normalization, we utilize the relative normalization weight in Eq. (6) instead of the variance. This approach accounts for the higher chance of misclassifying minority samples as majority, as opposed to the reverse.
+Thank you for your question. The similarity in the form of Eq. (7) and standard normalization is exactly why we named it imbalance-aware normalization. To incorporate the class-imbalance prior directly into the normalization, we utilize the relative normalization weight in Eq. (6) instead of the variance. This approach accounts for the higher chance of misclassifying minority samples as majority, as opposed to the reverse.
 
-Compared to the static weight defined in Eq. (6), actual variance need to be calculated in every iteration. More importantly, due to the lack of labels in minority classes, there may be only a few nodes predicted to be minority samples, leading to inaccurate and unstable variance estimation. Hence, we utilize both Eq. (6) and (7) for faster and more stable imbalance-aware normalization.
-
+Compared to the static weight defined in Eq. (6), actual variance need to be calculated in every iteration. More importantly, due to the lack of labels in minority classes, there may be only a few nodes predicted to be minority samples, leading to inaccurate and unstable variance estimation. Hence, we utilize both Eq. (6) and (7) for faster and more stable imbalance-aware normalization. We will add these explanations in the revised version.
 
 ### Quesiton #2: Micro-averaged metrics
 
 Sure. In accordance with previous research [1, 2, 3], we utilize the balanced accuracy and macro-f1 score to accurately assess the model's performance on both majority and minority classes. It should be noted that micro-averaged metrics may introduce biases and may not accurately reflect the model's performance on minority classes since they are likely to be dominated by majority classes. Nevertheless, we extend the main results (Table 2) in the original paper and present results using the Micro-F1. 
 
-The outcomes show that GBA can still demonstrate competitive and even better performance to all baselines. More importantly, GBA consistently improves the best performance with micro-averaged metric. For example, with GCN, GBA\_T achieves 3.07\%/16.85\%/6.21\% improvement on Cora/CiteSeer/PubMed on the best Micro-f1 score. This further demonstrates the efficiency of GBA's design: it can boost the learning for minority classes without sacrificing the performance of majority classes. We only report the BEST results among 7 baselines under each GBA setting due to the space limitation, please kindly refer to the following [anonymous page](https://anonymous.4open.science/r/KDD23_Paper275-E66D) for the full results.
+The outcomes show that GBA can still demonstrate competitive and even better performance to all baselines. More importantly, GBA consistently improves the best performance with micro-averaged metric. For example, with GCN, GBA-T achieves 3.07%/16.85%/6.21% improvement on Cora/CiteSeer/PubMed on the best Micro-f1 score. This further demonstrates the efficiency of GBA's design: it can boost the learning for minority classes without sacrificing the performance of majority classes. We only report the BEST results among 7 baselines under each GBA setting due to the space limitation, please kindly refer to the following [anonymous page](https://anonymous.4open.science/r/KDD23_Paper275-E66D) for the full results (section: Results with Micro-averaged Metrics (IR=10)).
 
 | GNN - Metric           | Cora  | w/ GBA_P       | w/ GBA_T         | CiteSeer | w/ GBA_P        | w/ GBA_T          | PubMed | w/ GBA_P         | w/ GBA_T         |
 | ---------------------- | ----- | -------------- | ---------------- | -------- | --------------- | ----------------- | ------ | ---------------- | ---------------- |
